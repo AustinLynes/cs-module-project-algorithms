@@ -18,35 +18,20 @@ def sliding_window_max(nums, k):
     # create a new array to return
     new_arr = []
 
-    # helper function to fin the max of thw slider_window
-
-    def find_max(slider_window): # O(n)
-        # maximum value found in the slider
-        max_value = slider_window[0] #O(1)
-
-        # traverse the list and see if the current value is greater or less than the next value -->
-        for ind in range(len(slider_window)):  # O(n)
-            # if [a] >= max_value 
-            # if the current value we are looking at inside the slider is
-            # greater than the maximum value we have stored so far.. 
-            if slider_window[ind] >= max_value: 
-                # replacce the maximum value with the current value we are looking at.
-                max_value = slider_window[ind]
-                # continue until the end of the slider window
-
-        return max_value
-
     # start the slider window
     # and run until the current value(start of the window) has looped until
     # it is at the maximum amount of slides
     # slides = l-k+1
-    while cur != len(nums)-k+1:  # 8 -1 -3 => 4
+    while cur != len(nums)-k+1:  # 8 -1 -3 => 4  # O(n^2) :( 
         # sliding window debug function
         # print(f'\033[1;32;10m > {cur} -> {end} : \033[1;33;10m {origin[cur:end]} \033[1;31;0m \n')
 
         # add the maximum value found inside the nums between the start and end of the window.
         # to the new array to be returned
-        new_arr.append(find_max(nums[cur:end]))
+        slider_window = nums[cur:end]
+        slider_window.sort() # O(n)
+        
+        new_arr.append(slider_window[len(slider_window)-1])
 
         # update the window to move --> 1 to the right
         cur += 1
